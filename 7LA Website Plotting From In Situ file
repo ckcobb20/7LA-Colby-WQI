@@ -1,0 +1,23 @@
+#Make folder to store data and code
+setwd('/Users/Charlie/Desktop/MLRC Work')
+#Before downloading data, delete top 8ish rows before the variables are listed
+T.prof <- read.csv('InSitu-test-plot2.csv')
+#convert to imperial system units
+meters <- T.prof[['Depth..m.']]
+feet <- meters*3.28
+Cels <- T.prof[['Temp..C.']]
+Fahr <- (Cels*9/5)+32
+T.prof$Depth.ft <- feet
+T.prof$Temp.F <- Fahr
+maxdep <-which.max(T.prof$Depth.ft)
+Dep2 <- T.prof$Depth.ft[1:maxdep]
+Temp2 <- T.prof$Temp.F[1:maxdep]
+O22<- T.prof$RDO.Sat....[1:maxdep]
+plot(Temp2,-Dep2,
+     xlab = 'Temperature (F)',
+     ylab = 'Depth (ft)',
+     main = 'GPDEP1 TD Profile')
+plot(O22, -Dep2,
+     xlab = 'Percent Dissolved Oxygen',
+     ylab = 'Depth (ft)',
+     main = 'GPDEP1 Oxygen-Depth Profile')
